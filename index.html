@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Particle Animation</title>
+    <link rel='stylesheet' href="style.css">
+</head>
+<body>
+    <div class="btn_container">
+        <button class="glow_btn">Anime</button>
+    </div>
+
+    <script>
+        const btnContainer = document.querySelector('.btn_container');
+        const button = document.querySelector('.glow_btn');
+        let interval;
+        const spawnDistance = 20;
+
+        function createParticles() {
+            const particles = document.createElement('div');
+            particles.classList.add('particles');
+
+            const btnWidth = button.offsetWidth;
+            const btnHeight = button.offsetHeight;
+
+            const angle = Math.random() * 2 * Math.PI;
+            const x = btnWidth / 2 + Math.cos(angle) * spawnDistance;
+            const y = btnHeight / 2 + Math.sin(angle) * spawnDistance;
+
+            const dx = Math.cos(angle) * (Math.random() * 100 + 50); // Случайное расстояние
+            const dy = Math.sin(angle) * (Math.random() * 100 + 50); // Случайное расстояние
+
+            particles.style.left = `${x}px`;
+            particles.style.top = `${y}px`;
+            particles.style.setProperty('--dx', `${dx}px`);
+            particles.style.setProperty('--dy', `${dy}px`);
+            particles.style.width = `${Math.random() * 5 + 5}px`; // Случайный размер
+            particles.style.height = particles.style.width; //Держите его круглым
+            particles.style.background = '#e50914'; // Фиксированный цвет
+
+            btnContainer.appendChild(particles);
+            setTimeout(() => {
+                particles.remove();
+            }, 3000); // Увеличено время исчезновения частиц
+        }
+
+        button.addEventListener('mouseenter', () => {
+            interval = setInterval(createParticles, 80);
+        });
+
+        button.addEventListener('mouseleave', () => {
+            clearInterval(interval);
+        });
+    </script>
+</body>
+</html>
